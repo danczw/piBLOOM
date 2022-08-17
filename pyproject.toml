@@ -1,11 +1,16 @@
 [tool.poetry]
 name = "piBLOOM"
 version = "0.1.0"
-description = ""
+license = "MIT"
+description = "A web application for serving the BLOOM model via a Raspberry Pi cluster"
 authors = ["danczw <dev.dc@pm.me>"]
+repository = "https://github.com/danczw/piBLOOM"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+Flask = "^2.2.2"
+transformers = "^4.21.1"
+torch = "^1.12.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
