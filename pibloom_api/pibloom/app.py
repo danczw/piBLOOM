@@ -7,6 +7,7 @@ except ImportError:
     from model import bloom_model
 
 app = Flask(__name__)
+bloom = bloom_model()
 
 @app.route('/index/', methods=['GET'])
 def index():
@@ -15,7 +16,6 @@ def index():
 @app.route('/chat/', methods=['POST'])
 def chat_with_bot():
     content = request.json['content']
-    bloom = bloom_model()
     
     answer = bloom.predict(content=content)
 
