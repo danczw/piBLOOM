@@ -12,6 +12,8 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 
 ## Project Structure
 
+<br>
+
     .
     ├─ pibloom_api                  # model inference API server
     │  ├─ pibloom
@@ -33,7 +35,9 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 
 <br>
 
-## Setup
+## 1. piBLOOM API server
+
+### 1.1 Setup
 
 The model is not loaded from the HuggingFace Hub, but from the local filesystem. Make sure to download 
 
@@ -47,7 +51,7 @@ from [HuggingFace Repo](https://huggingface.co/bigscience/bloom-560m/tree/main) 
 
 <br>
 
-**local setup without Docker**
+**Local setup without Docker**
 
 The project uses [Poetry](https://python-poetry.org) to manage the project dependencies. Install dependencies within the respective subfolder via:
 
@@ -55,7 +59,7 @@ The project uses [Poetry](https://python-poetry.org) to manage the project depen
 
 <br>
 
-The project uses [Flask](https://flask.palletsprojects.com/) to serve the model inference API as well as the web app.
+The project uses [Flask](https://flask.palletsprojects.com/) to serve the model inference API.
 
 Expose the inference API via:
 
@@ -66,7 +70,7 @@ The API will be exposed to `host='0.0.0.0', port=5000` by default.
 
 <br>
 
-**local setup with Docker**
+**Local setup with Docker**
 
 To run the API docker image, first build via:
 
@@ -84,9 +88,35 @@ Then run the image via:
 
 <br>
 
-## Testing
+### 1.2 Testing
 
 Testing is done using [pytest](https://docs.pytest.org/) and run via
 
     `cd pibloom_api/`
     `poetry run pytest`
+
+<br>
+
+----------------
+
+<br>
+
+## 2. piBLOOM web app
+
+### 2.1 Setup
+
+The web application is build using [Vue.js](https://vuejs.org/).
+
+To install dependencies, run:
+
+    `cd pibloom_web/`
+    `npm install`
+
+Run the web application in development mode via:
+
+    `cd pibloom_web/`
+    `npm run dev`
+
+### 2.2 Testing
+
+todo
