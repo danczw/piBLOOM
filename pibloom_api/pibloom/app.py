@@ -1,5 +1,10 @@
 from flask import Flask, jsonify, request
-from pibloom.model import bloom_model
+
+# handle import via poetry initialization and python
+try:
+    from pibloom.model import bloom_model
+except ImportError:
+    from model import bloom_model
 
 app = Flask(__name__)
 
@@ -17,4 +22,4 @@ def chat_with_bot():
     return jsonify({'data': answer[0]['generated_text']})
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
