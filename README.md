@@ -14,8 +14,11 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 
 <br>
 
-    .
-    ├─ pibloom_api                  # model inference API server
+    piBLOOM
+    ├─ .gitignore
+    ├─ LICENSE
+    ├─ pibloom_api                      # API for BLOOM model inference serving
+    │  ├─ Dockerfile
     │  ├─ pibloom
     │  │  ├─ app.py
     │  │  ├─ model.py
@@ -25,9 +28,32 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  └─ tests
     │     ├─ test_pibloom.py
     │     └─ __init__.py
-    ├─ README.md
-    ├─ .gitignore
-    └─ LICENSE
+    ├─ pibloom_web                      # piBLOOM web application
+    │  ├─ .eslintrc.cjs
+    │  ├─ .gitignore
+    │  ├─ index.html
+    │  ├─ package-lock.json
+    │  ├─ package.json
+    │  ├─ public
+    │  │  └─ favicon.ico
+    │  ├─ src
+    │  │  ├─ App.vue
+    │  │  ├─ assets
+    │  │  │  └─ ...
+    │  │  ├─ components
+    │  │  │  ├─ HelloWorld.vue
+    │  │  │  ├─ icons
+    │  │  │  │  └─ ...
+    │  │  │  ├─ TheWelcome.vue
+    │  │  │  └─ WelcomeItem.vue
+    │  │  ├─ main.js
+    │  │  ├─ router
+    │  │  │  └─ index.js
+    │  │  └─ views
+    │  │     ├─ AboutView.vue
+    │  │     └─ HomeView.vue
+    │  └─ vite.config.js
+    └─ README.md
 
 <br>
 
@@ -105,7 +131,7 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 ### 2.1 Setup
 
-The web application is build using [Vue.js](https://vuejs.org/).
+The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/).
 
 To install dependencies, run:
 
