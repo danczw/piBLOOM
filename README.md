@@ -112,10 +112,18 @@ To install dependencies, run:
     `cd pibloom_web/`
     `npm install`
 
-Run the web application in development mode via:
+Run the web application in development mode with hot-reloading via:
 
     `cd pibloom_web/`
     `npm run dev`
+
+Lint with [ESLint](https://eslint.org/)
+
+    npm run lint
+
+Compile and minify for production:
+
+    npm run build
 
 ### 2.2 Testing
 
