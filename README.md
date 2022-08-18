@@ -35,7 +35,9 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 
 ## Setup
 
-The project uses [Poetry](https://python-poetry.org) to manage the project dependencies. Install dependencies via:
+**local setup without Docker**
+
+The project uses [Poetry](https://python-poetry.org) to manage the project dependencies. Install dependencies within the respective subfolder via:
 
     `poetry install`
 
@@ -43,9 +45,22 @@ The project uses [Flask](https://flask.palletsprojects.com/) to serve the model 
 
 Expose the inference API via:
 
+    `cd pibloom_api/`
     `poetry run flask --app pibloom/app.py run`
 
-The API will be exposed to `host='127.0.0.1', port=5000` by default
+The API will be exposed to `host='0.0.0.0', port=5000` by default.
+
+**local setup with Docker**
+
+To run the API docker image, first build via:
+
+    `cd pibloom_api/`
+    `poetry run docker build -t pibloom_api .`
+
+Then run the image via:
+
+    `cd pibloom_api/`
+    `poetry run docker run -it -p 5000:5000 pibloom_api`
 
 <br>
 
@@ -57,4 +72,5 @@ The API will be exposed to `host='127.0.0.1', port=5000` by default
 
 Testing is done using [pytest](https://docs.pytest.org/) and run via
 
+    `cd pibloom_api/`
     `poetry run pytest`
