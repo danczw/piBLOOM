@@ -35,11 +35,25 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 
 ## Setup
 
+The model is not loaded from the HuggingFace Hub, but from the local filesystem. Make sure to download 
+
+- config.json
+- pytorch_model.bin
+- special_tokens_map.json
+- tokenizer.json
+- tokenizer.json
+
+from [HuggingFace Repo](https://huggingface.co/bigscience/bloom-560m/tree/main) and save them to `./pibloom_api/model/`.
+
+<br>
+
 **local setup without Docker**
 
 The project uses [Poetry](https://python-poetry.org) to manage the project dependencies. Install dependencies within the respective subfolder via:
 
     `poetry install`
+
+<br>
 
 The project uses [Flask](https://flask.palletsprojects.com/) to serve the model inference API as well as the web app.
 
@@ -49,6 +63,8 @@ Expose the inference API via:
     `poetry run flask --app pibloom/app.py run`
 
 The API will be exposed to `host='0.0.0.0', port=5000` by default.
+
+<br>
 
 **local setup with Docker**
 
