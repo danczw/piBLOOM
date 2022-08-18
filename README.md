@@ -13,13 +13,19 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
 ## Project Structure
 
     .
-    ├── pibloom                 # Web app source files
-    ├── test                    # Automated tests
-    ├── .gitignore
-    ├── poetry.lock
-    ├── pyproject.toml
-    ├── LICENSE
-    └── README.md
+    ├─ pibloom_api                  # model inference API server
+    │  ├─ pibloom
+    │  │  ├─ app.py
+    │  │  ├─ model.py
+    │  │  └─ __init__.py
+    │  ├─ poetry.lock
+    │  ├─ pyproject.toml
+    │  └─ tests
+    │     ├─ test_pibloom.py
+    │     └─ __init__.py
+    ├─ README.md
+    ├─ .gitignore
+    └─ LICENSE
 
 <br>
 

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "piBLOOM"
+name = "piBLOOM_api"
 version = "0.1.0"
 license = "MIT"
 description = "A web application for serving the BLOOM model via a Raspberry Pi cluster"
