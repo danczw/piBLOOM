@@ -1,15 +1,71 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div>Raspberry Pi cluster based BLOOM model serving.</div>
+    <br>
+    <div>
+      Find more at <a href="https://github.com/danczw/piBLOOM">www.github.com/danczw/piBLOOM</a>
+    </div>
+    <div class="powerby">
+      <div>
+        Powered by:
+      </div>
+
+      <br>
+
+      <div class="logos">
+        <a href="https://bigscience.huggingface.co">
+          <img
+            alt="Bloom logo"
+            class="logo"
+            src="@/assets/bloom.png"
+            height="125"
+          />
+        </a>
+        <a href="https://www.raspberrypi.com">
+          <img
+            alt="Raspberry Pi logo"
+            class="logo"
+            src="@/assets/raspberrypi.svg"
+            height="125"
+          />
+        </a>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
+.about {
+  text-align: center;
+  font-size: 1.2rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.powerby {
+  padding-top: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.logos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+img {
+  width: 300px;
+}
+
+/* @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>
