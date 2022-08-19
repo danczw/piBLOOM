@@ -2,20 +2,20 @@
 export default {
   data() {
     return {
-      question: '',
+      question: "",
       thinking: "I'm only a pie, let me think . . .                ",
-      answer: '',
-      api_result: ''
-    }
+      answer: "",
+      api_result: "",
+    };
   },
 
   watch: {
     // whenever question changes, this function will run
     question(newQuestion, oldQuestion) {
-      if (newQuestion.includes('?')) {
-        this.getAnswer()
+      if (newQuestion.includes("?") && newQuestion !== oldQuestion) {
+        this.getAnswer();
       }
-    }
+    },
   },
 
   methods: {
@@ -32,7 +32,7 @@ export default {
         // increase the index
         i++;
         // if the index reaches the maximum text length, cease the timer
-        if(i >= thinking.length) {
+        if (i >= thinking.length) {
           clearInterval(timer);
           context.answer = context.api_result;
         }
@@ -42,23 +42,27 @@ export default {
       timer = setInterval(type, 104);
 
       try {
-        const res = await fetch('https://yesno.wtf/api')
-        this.api_result = (await res.json()).answer
+        const res = await fetch("https://yesno.wtf/api");
+        this.api_result = (await res.json()).answer;
       } catch (error) {
-        this.api_result = 'Error! Could not reach the API. ' + error
+        this.api_result = "Error! Could not reach the API. " + error;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
   <div class="pibloom">
     <div class="question">
-      <input v-model.lazy="question" placeholder="  ask me anything . . ." class="form"/>
+      <input
+        v-model.lazy="question"
+        placeholder="  ask me anything . . ."
+        class="form"
+      />
     </div>
     <div class="answer green">
-      <span>{{answer}}</span>
+      <span>{{ answer }}</span>
     </div>
   </div>
 </template>

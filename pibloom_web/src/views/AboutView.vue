@@ -1,16 +1,17 @@
 <template>
   <div class="about">
     <div>Raspberry Pi cluster based BLOOM model serving.</div>
-    <br>
+    <br />
     <div>
-      Find more at <a href="https://github.com/danczw/piBLOOM">www.github.com/danczw/piBLOOM</a>
+      Find more at
+      <a href="https://github.com/danczw/piBLOOM"
+        >www.github.com/danczw/piBLOOM</a
+      >
     </div>
     <div class="powerby">
-      <div>
-        Powered by:
-      </div>
+      <div>Powered by:</div>
 
-      <br>
+      <br />
 
       <div class="logos">
         <a href="https://bigscience.huggingface.co">
@@ -30,7 +31,6 @@
           />
         </a>
       </div>
-
     </div>
   </div>
 </template>
