@@ -2,10 +2,20 @@
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* margin: 0 auto; */
+  overflow-y: hidden;
+  padding-top: 10%;
 
   font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  width: auto\9; /* ie8 */
 }
 
 a,
@@ -21,15 +31,15 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     padding: 0 2rem;
   }
-}
+} */
