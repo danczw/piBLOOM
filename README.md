@@ -35,7 +35,7 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  ├─ package-lock.json
     │  ├─ package.json
     │  ├─ public
-    │  │  └─ favicon.ico
+    │  │  └─ ...
     │  ├─ src
     │  │  ├─ App.vue
     │  │  ├─ assets
@@ -145,11 +145,13 @@ Run the web application in development mode with hot-reloading via:
 
 Lint with [ESLint](https://eslint.org/)
 
-    npm run lint
+    `cd pibloom_web/`
+    `npm run lint`
 
 Compile and minify for production:
 
-    npm run build
+    `cd pibloom_web/`
+    `npm run build`
 
 ### 2.2 Testing
 
