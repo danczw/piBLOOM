@@ -4,6 +4,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      disabled: 0,
+
       prompt: "",
       thinking: "I'm just a pi, let me think . . .                ",
       answer: "",
@@ -11,15 +13,6 @@ export default {
       api_url: "http://127.0.0.1:5000/chat/", // TODO: move to env
       api_result: "",
     };
-  },
-
-  watch: {
-    // whenever prompt changes, this function will run
-    prompt(newPrompt, oldPrompt) {
-      if (newPrompt !== oldPrompt) {
-        this.getAnswer();
-      }
-    },
   },
 
   methods: {
@@ -30,6 +23,9 @@ export default {
       let timer;
       let i = 0;
 
+      context.disabled = 1;
+      context.$refs.prompt_button_ref.classList.add("button--loading");
+
       function type() {
         // print the current charater with current index
         context.answer = thinking.substring(0, i);
@@ -38,17 +34,24 @@ export default {
         // if the index reaches the maximum text length, cease the timer
         if (i >= thinking.length) {
           clearInterval(timer);
-          context.answer = context.api_result;
         }
       }
 
-      context.$refs.prompt_ref.value = "";
       // pass in function, instead of calling it
       timer = setInterval(type, 104);
 
       const headers = {
         "Content-Type": "application/json",
       };
+
+      function api_response_reaction(resp_string) {
+        clearInterval(timer);
+        context.api_result = resp_string;
+        context.answer = context.api_result;
+        context.$refs.prompt_input_ref.value = "";
+        context.disabled = 0;
+        context.$refs.prompt_button_ref.classList.remove("button--loading");
+      }
 
       axios
         .post(
@@ -57,11 +60,10 @@ export default {
           { headers }
         )
         .then(function (response) {
-          context.api_result = response.data.data;
-          context.answer = context.api_result;
+          api_response_reaction(response.data.data);
         })
         .catch(function (error) {
-          context.api_result = "Error! Could not reach the API. " + error;
+          api_response_reaction("Error! Could not reach the API. " + error)
         });
     },
   },
@@ -72,11 +74,21 @@ export default {
   <div class="pibloom">
     <div class="prompt">
       <input
-        ref="prompt_ref"
-        v-model.lazy="prompt"
-        placeholder="  give me a prompt . . ."
         class="input"
+        ref="prompt_input_ref"
+        :disabled="disabled == 1"
+        @keyup.enter="getAnswer"
+        placeholder="  give me a prompt . . ."
       />
+
+      <button
+        class="button"
+        ref="prompt_button_ref"
+        type="button"
+        @click="getAnswer"
+      >
+        <span class="button__text">Go!</span>
+      </button>
     </div>
     <div class="answer green">
       <span>{{ answer }}</span>
@@ -102,6 +114,8 @@ export default {
   margin: 0 auto;
   width: 50%;
   min-width: 250px;
+  display: flex;
+  flex-direction: row;
 }
 
 .input {
@@ -121,5 +135,56 @@ export default {
   width: 50%;
   min-width: 250px;
   text-align: left;
+}
+
+.button {
+  position: relative;
+  padding: 8px 16px;
+  background: hsla(160, 100%, 37%, 1);
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.button:active {
+  background: hsla(160, 100%, 37%, 1);
+}
+
+.button__text {
+  font: bold 20px "Quicksand", san-serif;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.button--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
 }
 </style>
