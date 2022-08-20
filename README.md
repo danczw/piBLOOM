@@ -17,41 +17,40 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     piBLOOM
     ├─ .gitignore
     ├─ LICENSE
-    ├─ pibloom_api                      # API for BLOOM model inference serving
+    ├─ pibloom_api                      # API for serving the BLOOM model
     │  ├─ Dockerfile
     │  ├─ pibloom
-    │  │  ├─ app.py
-    │  │  ├─ model.py
+    │  │  ├─ app.py                     # API entry point
+    │  │  ├─ model.py                   # model class
     │  │  └─ __init__.py
     │  ├─ poetry.lock
     │  ├─ pyproject.toml
-    │  └─ tests
+    │  └─ tests                         # API testing
     │     ├─ test_pibloom.py
     │     └─ __init__.py
-    ├─ pibloom_web                      # piBLOOM web application
+    ├─ pibloom_web                      # Web application for serving the BLOOM model
     │  ├─ .eslintrc.cjs
     │  ├─ .gitignore
     │  ├─ index.html
     │  ├─ package-lock.json
     │  ├─ package.json
     │  ├─ public
-    │  │  └─ ...
+    │  │  └─ favicon.ico
     │  ├─ src
     │  │  ├─ App.vue
     │  │  ├─ assets
-    │  │  │  └─ ...
+    │  │  │  ├─ base.css
+    │  │  │  ├─ bloom.png
+    │  │  │  ├─ main.css
+    │  │  │  └─ raspberrypi.svg
     │  │  ├─ components
-    │  │  │  ├─ HelloWorld.vue
-    │  │  │  ├─ icons
-    │  │  │  │  └─ ...
-    │  │  │  ├─ TheWelcome.vue
-    │  │  │  └─ WelcomeItem.vue
+    │  │  │  └─ HelloWorld.vue
     │  │  ├─ main.js
     │  │  ├─ router
     │  │  │  └─ index.js
     │  │  └─ views
-    │  │     ├─ AboutView.vue
-    │  │     └─ HomeView.vue
+    │  │     ├─ AboutView.vue           # About page
+    │  │     └─ HomeView.vue            # Main page
     │  └─ vite.config.js
     └─ README.md
 
