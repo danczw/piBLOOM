@@ -63,7 +63,7 @@ export default {
           api_response_reaction(response.data.data);
         })
         .catch(function (error) {
-          api_response_reaction("Error! Could not reach the API. " + error)
+          api_response_reaction("Error! Could not reach the API. " + error);
         });
     },
   },
