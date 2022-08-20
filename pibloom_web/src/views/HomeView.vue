@@ -1,18 +1,22 @@
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      question: "",
-      thinking: "I'm only a pie, let me think . . .                ",
+      prompt: "",
+      thinking: "I'm just a pi, let me think . . .                ",
       answer: "",
+
+      api_url: "http://127.0.0.1:5000/chat/", // TODO: move to env
       api_result: "",
     };
   },
 
   watch: {
-    // whenever question changes, this function will run
-    question(newQuestion, oldQuestion) {
-      if (newQuestion.includes("?") && newQuestion !== oldQuestion) {
+    // whenever prompt changes, this function will run
+    prompt(newPrompt, oldPrompt) {
+      if (newPrompt !== oldPrompt) {
         this.getAnswer();
       }
     },
@@ -21,7 +25,7 @@ export default {
   methods: {
     async getAnswer() {
       let context = this;
-      let thinking = this.thinking;
+      let thinking = context.thinking;
 
       let timer;
       let i = 0;
@@ -38,15 +42,27 @@ export default {
         }
       }
 
+      context.$refs.prompt_ref.value = "";
       // pass in function, instead of calling it
       timer = setInterval(type, 104);
 
-      try {
-        const res = await fetch("https://yesno.wtf/api");
-        this.api_result = (await res.json()).answer;
-      } catch (error) {
-        this.api_result = "Error! Could not reach the API. " + error;
-      }
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      axios
+        .post(
+          context.api_url, // data POST url
+          { content: context.prompt }, // data to be sent,
+          { headers }
+        )
+        .then(function (response) {
+          context.api_result = response.data.data;
+          context.answer = context.api_result;
+        })
+        .catch(function (error) {
+          context.api_result = "Error! Could not reach the API. " + error;
+        });
     },
   },
 };
@@ -54,11 +70,12 @@ export default {
 
 <template>
   <div class="pibloom">
-    <div class="question">
+    <div class="prompt">
       <input
-        v-model.lazy="question"
-        placeholder="  ask me anything . . ."
-        class="form"
+        ref="prompt_ref"
+        v-model.lazy="prompt"
+        placeholder="  give me a prompt . . ."
+        class="input"
       />
     </div>
     <div class="answer green">
@@ -79,7 +96,7 @@ export default {
   min-width: 300px;
 }
 
-.question {
+.prompt {
   border-bottom: 2px solid var(--color-border);
   border-radius: 10px;
   margin: 0 auto;
@@ -87,7 +104,7 @@ export default {
   min-width: 250px;
 }
 
-.form {
+.input {
   width: 100%;
   border: 0;
   outline: 0;
