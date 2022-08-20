@@ -24,6 +24,7 @@ export default {
       let i = 0;
 
       context.disabled = 1;
+      context.prompt = context.$refs.prompt_input_ref.value;
       context.$refs.prompt_button_ref.classList.add("button--loading");
 
       function type() {
@@ -52,7 +53,7 @@ export default {
         context.disabled = 0;
         context.$refs.prompt_button_ref.classList.remove("button--loading");
       }
-
+      
       axios
         .post(
           context.api_url, // data POST url
