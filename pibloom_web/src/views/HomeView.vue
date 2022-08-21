@@ -23,6 +23,11 @@ export default {
       let timer;
       let i = 0;
 
+      // check if prompt is empty
+      if (context.$refs.prompt_input_ref.value === "") {
+        return;
+      }
+
       context.disabled = 1;
       context.prompt = context.$refs.prompt_input_ref.value;
       context.$refs.prompt_button_ref.classList.add("button--loading");
@@ -53,7 +58,7 @@ export default {
         context.disabled = 0;
         context.$refs.prompt_button_ref.classList.remove("button--loading");
       }
-      
+
       axios
         .post(
           context.api_url, // data POST url
