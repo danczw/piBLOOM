@@ -20,22 +20,22 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     ├─ pibloom_api                      # API for serving the BLOOM model
     │  ├─ Dockerfile
     │  ├─ pibloom
-    │  │  ├─ app.py                     # API entry point
-    │  │  ├─ model.py                   # model class
+    │  │  ├─ app.py                     # - API entry point
+    │  │  ├─ model.py                   # - Model class
     │  │  └─ __init__.py
-    │  ├─ poetry.lock
+    │  ├─ poetry.lock                   # - Flask based API dependencies
     │  ├─ pyproject.toml
-    │  └─ tests                         # API testing
+    │  └─ tests                         # - API testing
     │     ├─ test_pibloom.py
     │     └─ __init__.py
     ├─ pibloom_web                      # Web application for serving the BLOOM model
     │  ├─ .eslintrc.cjs
     │  ├─ .gitignore
     │  ├─ index.html
-    │  ├─ package-lock.json
+    │  ├─ package-lock.json             # - Web application dependencies
     │  ├─ package.json
     │  ├─ public
-    │  │  └─ favicon.ico
+    │  │  └─ [...]
     │  ├─ src
     │  │  ├─ App.vue
     │  │  ├─ assets
@@ -46,13 +46,25 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  │  ├─ components
     │  │  │  └─ HelloWorld.vue
     │  │  ├─ main.js
-    │  │  ├─ router
+    │  │  ├─ router                     # - Web application site routing
     │  │  │  └─ index.js
     │  │  └─ views
-    │  │     ├─ AboutView.vue           # About page
-    │  │     └─ HomeView.vue            # Main page
+    │  │     ├─ AboutView.vue           # - About page
+    │  │     └─ HomeView.vue            # - Main page
     │  └─ vite.config.js
     └─ README.md
+
+The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` file ([direct](./docker-compose.yml)).
+
+Simply install Docker and build the images via:
+
+    `docker-compose.yml`
+
+Then start the container using:
+
+    `docker-compose up`
+
+Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the two steps below.
 
 <br>
 
@@ -130,7 +142,9 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 ### 2.1 Setup
 
-The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/).
+The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [NGIИX](https://www.nginx.com), an open source web server framework.
+
+**Local setup without Docker**
 
 To install dependencies, run:
 
@@ -151,6 +165,18 @@ Compile and minify for production:
 
     `cd pibloom_web/`
     `npm run build`
+
+**Local setup with Docker**
+
+To run the web app docker image, first build via:
+
+    `cd pibloom_web/`
+    `docker build -t pibloom_web .`
+
+Then run the image via:
+
+    `cd pibloom_web/`
+    `docker run -it -p 8080:80 pibloom_web`
 
 ### 2.2 Testing
 
