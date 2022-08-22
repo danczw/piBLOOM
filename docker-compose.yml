@@ -1,0 +1,10 @@
+services:
+  pibloom_api:
+    build: ./piBLOOM_api
+    ports:
+      - 5000:5000
+
+  pibloom_web:
+    build: ./piBLOOM_web
+    ports:
+      - 8080:80
