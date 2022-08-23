@@ -4,8 +4,11 @@
 
 The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co) is a transformer based autoregressive Large Language Model (LLM). It is trained to continue text from a prompt on vast amounts of text data using industrial-scale computational resources. As such, it is able to output coherent text in 46 languages and 13 programming languages that is hardly distinguishable from text written by humans. The model is available for download from the [HuggingFace repository](https://huggingface.co/bigscience/bloom), including detailed [model documentation](https://huggingface.co/docs/transformers/model_doc/bloom).
 
+Goal of the project is to serve a simple web app which allows to "chat" with the BLOOM model of a small [Raspberry Pi](https://www.raspberrypi.org) cluster of approximately 2-4 [Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/).
+
 <br>
 
+----------------
 ----------------
 
 <br>
@@ -54,7 +57,7 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  └─ vite.config.js
     └─ README.md
 
-The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` file ([direct](./docker-compose.yml)).
+The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` [file](./docker-compose.yml).
 
 Simply install Docker and build the images via:
 
@@ -69,18 +72,17 @@ Alternatively, the API and web application can be served individually (e.g. for 
 <br>
 
 ----------------
+----------------
 
 <br>
 
-## Development
+## Development Setup
 
 <br>
 
 ### 1. piBLOOM API server
 
 <br>
-
-__1.1 Setup__
 
 The model is not loaded from the HuggingFace Hub, but from the local filesystem. Make sure to download 
 
@@ -132,7 +134,7 @@ Then run the image via:
 
 <br>
 
-__1.2 Testing__
+**Testing**
 
 Testing is done using [pytest](https://docs.pytest.org/) and run via
 
@@ -148,8 +150,6 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 ### 2. piBLOOM web app
 
 <br>
-
-__2.1 Setup__
 
 The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [NGIИX](https://www.nginx.com), an open source web server framework.
 
@@ -187,17 +187,31 @@ Then run the image via:
     `cd pibloom_web/`
     `docker run -it -p 8080:80 pibloom_web`
 
-__2.2 Testing__
+**2.2 Testing**
 
-TODO
+todo
+
+<br>
+
+----------------
+----------------
+
+<br>
+
+*Powered by*
+
+<img src="./pibloom_web/src/assets/bloom.png" alt="BLOOM model logo" height="100"/>     <img src="./pibloom_web/src/assets/raspberrypi.svg" alt="raspberry pi logo" height="100"/>
+
+<br>
 
 ## TODOs
 
 [x]  update pytest for FastAPI
 []  add web app tests
-[]  add docker compose documentation
+[x]  add docker compose documentation
 []  add docker network for web app to api communication
 []  pass number of workers from docker compose to api docker file
 [x] add corse policy
 []  review corse policy
 []  minimize api docker image
+[]  optimize model
