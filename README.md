@@ -207,11 +207,19 @@ todo
 ## TODOs
 
 [x]  update pytest for FastAPI
+
 []  add web app tests
+
 [x]  add docker compose documentation
+
 []  add docker network for web app to api communication
+
 []  pass number of workers from docker compose to api docker file
+
 [x] add corse policy
+
 []  review corse policy
+
 []  minimize api docker image
+
 []  optimize model
