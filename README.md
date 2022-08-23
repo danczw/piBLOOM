@@ -23,7 +23,7 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  │  ├─ app.py                     # - API entry point
     │  │  ├─ model.py                   # - Model class
     │  │  └─ __init__.py
-    │  ├─ poetry.lock                   # - Flask based API dependencies
+    │  ├─ poetry.lock                   # - API dependencies
     │  ├─ pyproject.toml
     │  └─ tests                         # - API testing
     │     ├─ test_pibloom.py
@@ -49,8 +49,8 @@ The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co
     │  │  ├─ router                     # - Web application site routing
     │  │  │  └─ index.js
     │  │  └─ views
-    │  │     ├─ AboutView.vue           # - About page
-    │  │     └─ HomeView.vue            # - Main page
+    │  │     ├─ AboutView.vue           # - About view
+    │  │     └─ HomeView.vue            # - Main view
     │  └─ vite.config.js
     └─ README.md
 
@@ -72,9 +72,15 @@ Alternatively, the API and web application can be served individually (e.g. for 
 
 <br>
 
-## 1. piBLOOM API server
+## Development
 
-### 1.1 Setup
+<br>
+
+### 1. piBLOOM API server
+
+<br>
+
+__1.1 Setup__
 
 The model is not loaded from the HuggingFace Hub, but from the local filesystem. Make sure to download 
 
@@ -96,14 +102,15 @@ The project uses [Poetry](https://python-poetry.org) to manage the project depen
 
 <br>
 
-The project uses [Flask](https://flask.palletsprojects.com/) to serve the model inference API.
+The project uses [FastAPI](https://fastapi.tiangolo.com) with [uvicorn](https://www.uvicorn.org) to serve the model inference API.
+For deployment within Docker, [gunicorn](https://gunicorn.org) is used as an application server. Find more details here: [FastAPI with Gunicorn and Uvicorn](https://fastapi.tiangolo.com/deployment/server-workers/).
 
 Expose the inference API via:
 
     `cd pibloom_api/`
-    `poetry run flask --app pibloom/app.py run`
+    `poetry run uvicorn pibloom.app:app --host 0.0.0.0 --port 5000 --reload`
 
-The API will be exposed to `host='0.0.0.0', port=5000` by default.
+The API will be exposed to `host='0.0.0.0' (all network interfaces), port=5000`.
 
 <br>
 
@@ -125,7 +132,7 @@ Then run the image via:
 
 <br>
 
-### 1.2 Testing
+__1.2 Testing__
 
 Testing is done using [pytest](https://docs.pytest.org/) and run via
 
@@ -138,9 +145,11 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 <br>
 
-## 2. piBLOOM web app
+### 2. piBLOOM web app
 
-### 2.1 Setup
+<br>
+
+__2.1 Setup__
 
 The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [NGIИX](https://www.nginx.com), an open source web server framework.
 
@@ -178,6 +187,17 @@ Then run the image via:
     `cd pibloom_web/`
     `docker run -it -p 8080:80 pibloom_web`
 
-### 2.2 Testing
+__2.2 Testing__
 
-todo
+TODO
+
+## TODOs
+
+[x]  update pytest for FastAPI
+[]  add web app tests
+[]  add docker compose documentation
+[]  add docker network for web app to api communication
+[]  pass number of workers from docker compose to api docker file
+[x] add corse policy
+[]  review corse policy
+[]  minimize api docker image
