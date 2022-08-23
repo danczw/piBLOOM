@@ -1,20 +1,21 @@
+from fastapi.testclient import TestClient
 from pibloom import __version__
 from pibloom.app import app
 import json
 
+client = TestClient(app)
+
 def test_version():
     assert __version__ == '0.1.0'
 
-def test_index():
-    tester = app.test_client()
-    response = tester.get('/index/', content_type='html/text')
+def test_root():
+    response = client.get('/')
     
     assert response.status_code == 200
-    assert b'Hello World!' in response.data
+    assert response.json() == {'data': 'Hello World!'}
 
 def test_index():
-    tester = app.test_client()
     data = {'content':'This is a test'}
-    response = tester.post('/chat/', data=json.dumps(data), content_type='application/json')
+    response = client.post('/chat/', data=json.dumps(data))
     
     assert response.status_code == 200

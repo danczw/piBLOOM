@@ -1,47 +1,54 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from waitress import serve
+from fastapi import FastAPI, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-import logging
-logging.basicConfig(
-    encoding='utf-8',
-    level=logging.DEBUG,
-    format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
-)
-
-# handle import via poetry initialization and python
+# handle different entry points
 try:
     from pibloom.model import bloom_model
 except ImportError:
     from model import bloom_model
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}) # TODO: add origin restriction
-
+# load BLOOM model from local files
 bloom = bloom_model()
 
-@app.route('/index/', methods=['GET'])
-def index():
-    response = jsonify({'data': 'Hello World!'})
+# set request and response models
+class DataIn(BaseModel):
+    content: str
     
-    app.logger.info(
-        f'request {request.remote_addr} {request.path} {request.method} : response {response.status}'
-    )
-    
+class DataOut(BaseModel):
+    data: str
+
+
+# set cross-origin resource sharing
+origins = [
+    "http://localhost:5050"
+    , "http://127.0.0.1:5050"
+]
+
+# init app
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
+@app.get('/', status_code=status.HTTP_200_OK)
+async def root():
+    response = {'data': 'Hello World!'}
     return response
 
-@app.route('/chat/', methods=['POST'])
-def chat_with_bot():
-    content = request.json['content']
-    answer = bloom.predict(content=content)
-
-    response = jsonify({'data': answer[0]['generated_text']})
+@app.post('/chat/', response_model=DataOut, status_code=status.HTTP_200_OK)
+async def chat_with_bot(data_in: DataIn):
+    if data_in.content:
+        answer = bloom.predict(content=data_in.content)
+        response = {'data': answer[0]['generated_text']}
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail='Empty prompt'
+        )
     
-    app.logger.info(
-        f'request {request.remote_addr} {request.path} {request.method} : response {response.status}'
-    )
-
     return response
-
-if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=5000)

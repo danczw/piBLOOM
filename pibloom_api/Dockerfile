@@ -18,4 +18,5 @@ FROM python as runtime
 ENV PATH="/app/.venv/bin:$PATH"
 COPY --from=poetry /app /app
 WORKDIR /app
-CMD [ "python", "./pibloom/app.py" ]
+# CMD [ "python", "./pibloom/app.py" ]
+CMD [ "python", "-m", "gunicorn", "pibloom.app:app", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:5000"]
