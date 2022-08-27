@@ -10,7 +10,7 @@ export default {
       thinking: "I'm just a pi, let me think . . .                ",
       answer: "",
 
-      api_url: "http://127.0.0.1:5000/chat/", // TODO: move to env
+      api_url: import.meta.env.VITE_API_URL,
       api_result: "",
     };
   },
@@ -32,7 +32,7 @@ export default {
       context.prompt = context.$refs.prompt_input_ref.value;
       context.$refs.prompt_button_ref.classList.add("button--loading");
 
-      function type() {
+      function typing_effect() {
         // print the current charater with current index
         context.answer = thinking.substring(0, i);
         // increase the index
@@ -44,19 +44,19 @@ export default {
       }
 
       // pass in function, instead of calling it
-      timer = setInterval(type, 104);
+      timer = setInterval(typing_effect, 104);
 
       const headers = {
         "Content-Type": "application/json",
       };
 
-      function api_response_reaction(resp_string) {
-        clearInterval(timer);
-        context.api_result = resp_string;
-        context.answer = context.api_result;
-        context.$refs.prompt_input_ref.value = "";
-        context.disabled = 0;
-        context.$refs.prompt_button_ref.classList.remove("button--loading");
+      function api_response_reaction(this_context, func_timer, resp_string) {
+        clearInterval(func_timer);
+        this_context.api_result = resp_string;
+        this_context.answer = this_context.api_result;
+        this_context.$refs.prompt_input_ref.value = "";
+        this_context.disabled = 0;
+        this_context.$refs.prompt_button_ref.classList.remove("button--loading");
       }
 
       axios
@@ -66,10 +66,18 @@ export default {
           { headers }
         )
         .then(function (response) {
-          api_response_reaction(response.data.data);
+          api_response_reaction(
+            context,
+            timer,
+            response.data.data
+          );
         })
         .catch(function (error) {
-          api_response_reaction("Error! Could not reach the API. " + error);
+          api_response_reaction(
+            context,
+            timer,
+            "Error! Could not reach the API. " + error
+          );
         });
     },
   },
