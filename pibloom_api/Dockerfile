@@ -15,8 +15,9 @@ RUN poetry install --no-interaction --no-ansi -vvv
 
 # production stage: build final Docker Image by copying and configuring virtual env from poetry stage
 FROM python as runtime
+ARG N_WORKERS
+ENV N_WORKERS=$N_WORKERS
 ENV PATH="/app/.venv/bin:$PATH"
 COPY --from=poetry /app /app
 WORKDIR /app
-# CMD [ "python", "./pibloom/app.py" ]
-CMD [ "python", "-m", "gunicorn", "pibloom.app:app", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:5000"]
+CMD python -m gunicorn pibloom.app:app --workers $N_WORKERS --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:5000 --timeout 120
