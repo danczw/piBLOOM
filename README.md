@@ -1,10 +1,10 @@
 # piBLOOM - Raspberry Pi based BLOOM model serving
 
-**A web application for serving the BLOOM model via a Raspberry Pi cluster.**
+**A web application and REST API for serving the BLOOM model via a Raspberry Pi cluster.**
 
 The **BLOOM model**, developed by [BigScience](https://bigscience.huggingface.co) is a transformer based autoregressive Large Language Model (LLM). It is trained to continue text from a prompt on vast amounts of text data using industrial-scale computational resources. As such, it is able to output coherent text in 46 languages and 13 programming languages that is hardly distinguishable from text written by humans. The model is available for download from the [HuggingFace repository](https://huggingface.co/bigscience/bloom), including detailed [model documentation](https://huggingface.co/docs/transformers/model_doc/bloom).
 
-Goal of the project is to serve a simple web app which allows to "chat" with the BLOOM model of a small [Raspberry Pi](https://www.raspberrypi.org) cluster of approximately 2-4 [Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/).
+Goal of the project is to serve a simple web app and REST API which allows to "chat" with the BLOOM model of a small [Raspberry Pi](https://www.raspberrypi.org) cluster of approximately 2-4 [Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/).
 
 <br>
 
@@ -32,6 +32,7 @@ Goal of the project is to serve a simple web app which allows to "chat" with the
     │     ├─ test_pibloom.py
     │     └─ __init__.py
     ├─ pibloom_web                      # Web application for serving the BLOOM model
+    │  ├─ .env                          # - not included! should define VITE_API_URL
     │  ├─ .eslintrc.cjs
     │  ├─ .gitignore
     │  ├─ index.html
@@ -61,13 +62,15 @@ The API and web application can be served using [Docker](https://www.docker.com)
 
 Simply install Docker and build the images via:
 
-    `docker-compose.yml`
+    `docker-compose build`
+
+You can increase the number of workers for the API by increasing the `N_WORKERS` argument in the [docker-compose.yml](./docker-compose.yml) file.
 
 Then start the container using:
 
     `docker-compose up`
 
-Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the two steps below.
+Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the steps below.
 
 <br>
 
@@ -100,11 +103,13 @@ from [HuggingFace Repo](https://huggingface.co/bigscience/bloom-560m/tree/main) 
 
 The project uses [Poetry](https://python-poetry.org) to manage the project dependencies. Install dependencies within the respective subfolder via:
 
+    `cd pibloom_api/`
     `poetry install`
 
 <br>
 
 The project uses [FastAPI](https://fastapi.tiangolo.com) with [uvicorn](https://www.uvicorn.org) to serve the model inference API.
+
 For deployment within Docker, [gunicorn](https://gunicorn.org) is used as an application server. Find more details here: [FastAPI with Gunicorn and Uvicorn](https://fastapi.tiangolo.com/deployment/server-workers/).
 
 Expose the inference API via:
@@ -189,7 +194,7 @@ Then run the image via:
 
 **2.2 Testing**
 
-todo
+-
 
 <br>
 
@@ -208,13 +213,11 @@ todo
 
 [x]  update pytest for FastAPI
 
-[]  add web app tests
-
 [x]  add docker compose documentation
 
-[]  add docker network for web app to api communication
+[]  add docker network for container communication
 
-[]  pass number of workers from docker compose to api docker file
+[x]  pass number of workers from docker compose to api docker file
 
 [x] add corse policy
 
