@@ -13,25 +13,26 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
 
 <br>
 
-## Project Structure
+## Quick Setup
+
+Expose web application to `http://localhost:80` by running:
+
+```bash
+    docker compose up -- build
+```
+
+Attention: See `README.txt` ([./pibloom_api/model/README.txt](./pibloom_api/model/README.txt)) and update `.env` ([./pibloom_web/.env.example](./pibloom_web/.env.example)) to before running any setups!
 
 <br>
 
-The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` [file](./docker-compose.yml).
+----------------
+----------------
 
-Simply install Docker and build the images via:
+<br>
 
-    `docker-compose build`
+## Project Structure
 
-You can increase the number of workers for the API by increasing the `N_WORKERS` argument in the [docker-compose.yml](./docker-compose.yml) file.
-
-Then start the container using:
-
-    `docker-compose up`
-
-[NGINX](https://www.nginx.com) is used as a reverse proxy and load balancer to manage incoming traffic and distribute it to the slower upstream web application server. NGINX allows to hide the web server IP address to the client, making the server more secure.
-
-Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the setup steps below.
+<br>
 
     piBLOOM
     ├─ .gitignore
@@ -81,6 +82,22 @@ Alternatively, the API and web application can be served individually (e.g. for 
     │  │     └─ HomeView.vue        # - Main Vue View for model API interaction
     │  └─ vite.config.js
     └─ README.md
+
+The API, web application and proxy server can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` [file](./docker-compose.yml).
+
+Simply install Docker and build the images via:
+
+    `docker compose build`
+
+You can increase the number of workers for the API by increasing the `N_WORKERS` argument in the [docker-compose.yml](./docker-compose.yml) file.
+
+Then start the container using:
+
+    `docker compose up`
+
+[NGINX](https://www.nginx.com) is used as a reverse proxy and load balancer to manage incoming traffic and distribute it to the slower upstream web application server. NGINX allows to hide the web server IP address to the client, making the server more secure.
+
+Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the setup steps below.
 
 <br>
 
@@ -166,7 +183,7 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 <br>
 
-The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [expressjs](https://expressjs.com), an unopinionated, minimalist web framework for *Node.js*.
+The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [expressjs](https://expressjs.com) as middleware, an unopinionated, minimalist web framework for *Node.js*.
 
 **Local setup without Docker**
 
@@ -204,7 +221,7 @@ Then run the image via:
 
 **2.2 Testing**
 
--
+- None
 
 <br>
 
@@ -221,24 +238,26 @@ Then run the image via:
 
 ## TODOs
 
-[x] add web app backend 
+✅ add web app backend 
 
-[x]  update pytest for FastAPI
+✅ update pytest for FastAPI
 
-[x]  add docker compose documentation
+✅ add docker compose documentation
 
-[x]  add expressjs as middleware for web app - API communication
+✅ add expressjs as middleware for web app - API communication
 
-[x]  pass number of workers from docker compose to api docker file
+✅ pass number of workers from docker compose to api docker file
 
-[x] add corse policy
+✅ add corse policy
 
-[x] utilize custom docker network
+✅ utilize custom docker network
 
-[x]  add nginx for web app serving in prod
+✅ add nginx for web app serving in prod
 
-[]  review corse policy
+☐ review nginx configuration
 
-[x]  minimize api docker image - Note: further optimization highly beneficial
+☐ review corse policy
 
-[]  optimize model
+✅ minimize api docker image - Note: further optimization highly beneficial
+
+☐ optimize model
