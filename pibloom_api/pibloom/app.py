@@ -11,19 +11,6 @@ try:
 except ImportError:
     from model import bloom_model
 
-# set up logging
-# gunicorn_error_logger = logging.getLogger("gunicorn.error")
-# gunicorn_logger = logging.getLogger("gunicorn")
-# uvicorn_access_logger = logging.getLogger("uvicorn.access")
-# uvicorn_access_logger.handlers = gunicorn_error_logger.handlers
-
-# fastapi_logger.handerls = gunicorn_error_logger.handlers
-
-# if __name__ != "__main__":
-#     fastapi_logger.setLevel(gunicorn_logger.level)
-# else:
-#     fastapi_logger.setLevel(logging.DEBUG)
-
 '''
     When running with gunicorn the log handlers get suppressed instead of
     passed along to the container manager. This forces the gunicorn handlers
