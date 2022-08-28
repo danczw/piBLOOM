@@ -16,7 +16,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(webapp_path));
-app.use(morgan('tiny'));
+app.use(morgan('combined'));
 
 // root path serving vue app
 app.get('/', (req, res) => {
@@ -32,8 +32,6 @@ app.get('/hello/', (req, res) => {
 
 // BLOOM model serving path
 app.post('/chat/', (req, res) => {
-
-    console.log(api_url + '/chat/')
 
     const headers = {
         "Content-Type": "application/json",
