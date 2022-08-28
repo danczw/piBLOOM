@@ -1,12 +1,37 @@
 from fastapi import FastAPI, status, HTTPException
+from fastapi.logger import logger as fastapi_logger
 from fastapi.middleware.cors import CORSMiddleware
+import logging
 from pydantic import BaseModel
+import yaml
 
 # handle different entry points
 try:
     from pibloom.model import bloom_model
 except ImportError:
     from model import bloom_model
+
+# set up logging
+# gunicorn_error_logger = logging.getLogger("gunicorn.error")
+# gunicorn_logger = logging.getLogger("gunicorn")
+# uvicorn_access_logger = logging.getLogger("uvicorn.access")
+# uvicorn_access_logger.handlers = gunicorn_error_logger.handlers
+
+# fastapi_logger.handerls = gunicorn_error_logger.handlers
+
+# if __name__ != "__main__":
+#     fastapi_logger.setLevel(gunicorn_logger.level)
+# else:
+#     fastapi_logger.setLevel(logging.DEBUG)
+
+'''
+    When running with gunicorn the log handlers get suppressed instead of
+    passed along to the container manager. This forces the gunicorn handlers
+    to be used throughout the project.
+'''
+with open('config.yml') as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+    logging.config.dictConfig(config)
 
 # load BLOOM model from local files
 bloom = bloom_model()
@@ -23,10 +48,7 @@ app = FastAPI()
 
 # define CORS allowed origins
 origins = [
-    "http://localhost:5050"
-    , "http://127.0.0.1:5050"
-    , "http://localhost:8080"
-    , "http://127.0.0.1:8080"
+    '*'
 ]
 
 # set CORS policy
