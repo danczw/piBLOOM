@@ -7,7 +7,8 @@ COPY . .
 RUN npm run build
 
 # production stage: copy web app and serve it
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:lts-alpine as production-stage
+WORKDIR /app
+COPY --from=build-stage /app ./
+EXPOSE 8080
+CMD node server/server.js
