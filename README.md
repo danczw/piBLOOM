@@ -29,57 +29,58 @@ Then start the container using:
 
     `docker-compose up`
 
-Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the setup steps below.
+[NGINX](https://www.nginx.com) is used as a reverse proxy and load balancer to manage incoming traffic and distribute it to the slower upstream web application server. NGINX allows to hide the web server IP address to the client, making the server more secure.
 
+Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the setup steps below.
 
     piBLOOM
     ├─ .gitignore
+    ├─ docker-compose.yml           # Docker entry point for deployment
     ├─ LICENSE
-    ├─ docker-compose.yml               # Docker entry point for deployment
-    ├─ pibloom_api                      # API for serving the BLOOM model
+    ├─ pibloom_api                  # API for serving BLOOM model prompts
     │  ├─ .dockerignore
-    │  ├─ config.yml                    # - Configuration for API logging
+    │  ├─ config.yml                # - Configuration for API logging
     │  ├─ Dockerfile
+    │  ├─ model
+    │  │  └─ README.txt             # - Docs on model download instructions
     │  ├─ pibloom
-    │  │  ├─ app.py                     # - API entry point
-    │  │  ├─ model.py                   # - Model class
+    │  │  ├─ app.py                 # - API entry point
+    │  │  ├─ model.py               # - BLOOM model class
     │  │  └─ __init__.py
-    │  ├─ poetry.lock                   # - API dependencies
-    │  ├─ pyproject.toml
-    │  └─ tests                         # - API testing
+    │  ├─ poetry.lock               # - Poetry API dependencies
+    │  ├─ pyproject.toml            # - Poetry project setup
+    │  └─ tests                     # - API testing
     │     ├─ test_pibloom.py
     │     └─ __init__.py
-    ├─ pibloom_web                      # Web application for serving the BLOOM model
+    ├─ pibloom_proxy                # Web app reverse proxy
+    │  ├─ default.conf              # - Nginx configuration
+    │  └─ Dockerfile
+    ├─ pibloom_web                  # Web application for API interaction
     │  ├─ .dockerignore
-    │  ├─ .env.examlpe                  # - .env example file for needed env variables
-    │  ├─ .eslintrc.cjs
+    │  ├─ .env.example              # - .env example file for env var definitions
     │  ├─ .gitignore
+    │  ├─ Dockerfile
     │  ├─ index.html
-    │  ├─ package-lock.json             # - Web application dependencies
+    │  ├─ package-lock.json         # - Web application dependencies
     │  ├─ package.json
     │  ├─ public
     │  │  └─ [...]
     │  ├─ server
-    │  │  ├─ nginx.config               # - Nginx configuration
-    │  │  └─ server.js                  # - entrypoint for expressjs web app serving middleware
+    │  │  └─ server.js              # - Entrypoint for expressjs middleware
     │  ├─ src
     │  │  ├─ App.vue
     │  │  ├─ assets
-    │  │  │  ├─ base.css
-    │  │  │  ├─ bloom.png
-    │  │  │  ├─ main.css
-    │  │  │  └─ raspberrypi.svg
+    │  │  │  └─ [...]
     │  │  ├─ components
     │  │  │  └─ HelloWorld.vue
     │  │  ├─ main.js
-    │  │  ├─ router                     # - Web application site routing
+    │  │  ├─ router                 # - Web application site routing
     │  │  │  └─ index.js
     │  │  └─ views
-    │  │     ├─ AboutView.vue           # - About view
-    │  │     └─ HomeView.vue            # - Main view
+    │  │     ├─ AboutView.vue       # - Vue view about project
+    │  │     └─ HomeView.vue        # - Main Vue View for model API interaction
     │  └─ vite.config.js
     └─ README.md
-
 
 <br>
 
@@ -135,12 +136,12 @@ The API will be exposed to `host='0.0.0.0' (all network interfaces), port=5000`.
 To run the API docker image, first build via:
 
     `cd pibloom_api/`
-    `poetry run docker build -t pibloom_api .`
+    `docker build -t pibloom_api .`
 
 Then run the image via:
 
     `cd pibloom_api/`
-    `poetry run docker run -it -p 5000:5000 pibloom_api`
+    `docker run -it -p 5000:5000 pibloom_api`
 
 <br>
 
@@ -232,10 +233,12 @@ Then run the image via:
 
 [x] add corse policy
 
-[]  review nginx for web app serving in prod
+[x] utilize custom docker network
+
+[x]  add nginx for web app serving in prod
 
 []  review corse policy
 
-[]  minimize api docker image
+[x]  minimize api docker image - Note: further optimization highly beneficial
 
 []  optimize model
