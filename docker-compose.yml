@@ -6,8 +6,25 @@ services:
       - N_WORKERS=2 # number of uvicorn workers for unicorn api server
     ports:
       - 5000:5000
+    networks:
+      - pinet
 
   pibloom_web:
-    build: ./piBLOOM_web
+    build:
+      context: ./piBLOOM_web
     ports:
       - 8080:8080
+    networks:
+      - pinet
+  
+  pibloom_proxy:
+    build:
+      context: ./piBLOOM_proxy
+    ports:
+      - 80:80
+    networks:
+      - pinet
+
+networks:
+  pinet:
+    driver: bridge
