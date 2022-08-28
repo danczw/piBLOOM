@@ -17,10 +17,28 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
 
 <br>
 
+The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` [file](./docker-compose.yml).
+
+Simply install Docker and build the images via:
+
+    `docker-compose build`
+
+You can increase the number of workers for the API by increasing the `N_WORKERS` argument in the [docker-compose.yml](./docker-compose.yml) file.
+
+Then start the container using:
+
+    `docker-compose up`
+
+Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the setup steps below.
+
+
     piBLOOM
     ├─ .gitignore
     ├─ LICENSE
+    ├─ docker-compose.yml               # Docker entry point for deployment
     ├─ pibloom_api                      # API for serving the BLOOM model
+    │  ├─ .dockerignore
+    │  ├─ config.yml                    # - Configuration for API logging
     │  ├─ Dockerfile
     │  ├─ pibloom
     │  │  ├─ app.py                     # - API entry point
@@ -32,7 +50,8 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
     │     ├─ test_pibloom.py
     │     └─ __init__.py
     ├─ pibloom_web                      # Web application for serving the BLOOM model
-    │  ├─ .env                          # - not included! should define VITE_API_URL
+    │  ├─ .dockerignore
+    │  ├─ .env.examlpe                  # - .env example file for needed env variables
     │  ├─ .eslintrc.cjs
     │  ├─ .gitignore
     │  ├─ index.html
@@ -40,6 +59,9 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
     │  ├─ package.json
     │  ├─ public
     │  │  └─ [...]
+    │  ├─ server
+    │  │  ├─ nginx.config               # - Nginx configuration
+    │  │  └─ server.js                  # - entrypoint for expressjs web app serving middleware
     │  ├─ src
     │  │  ├─ App.vue
     │  │  ├─ assets
@@ -58,19 +80,6 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
     │  └─ vite.config.js
     └─ README.md
 
-The API and web application can be served using [Docker](https://www.docker.com), utilizing the `docker-compose.yml` [file](./docker-compose.yml).
-
-Simply install Docker and build the images via:
-
-    `docker-compose build`
-
-You can increase the number of workers for the API by increasing the `N_WORKERS` argument in the [docker-compose.yml](./docker-compose.yml) file.
-
-Then start the container using:
-
-    `docker-compose up`
-
-Alternatively, the API and web application can be served individually (e.g. for development purposes) as per the steps below.
 
 <br>
 
@@ -156,7 +165,7 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 <br>
 
-The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [NGIИX](https://www.nginx.com), an open source web server framework.
+The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [expressjs](https://expressjs.com), an unopinionated, minimalist web framework for *Node.js*.
 
 **Local setup without Docker**
 
@@ -190,7 +199,7 @@ To run the web app docker image, first build via:
 Then run the image via:
 
     `cd pibloom_web/`
-    `docker run -it -p 8080:80 pibloom_web`
+    `docker run -itd -p 8080:8080 pibloom_web`
 
 **2.2 Testing**
 
@@ -211,15 +220,19 @@ Then run the image via:
 
 ## TODOs
 
+[x] add web app backend 
+
 [x]  update pytest for FastAPI
 
 [x]  add docker compose documentation
 
-[]  add docker network for container communication
+[x]  add expressjs as middleware for web app - API communication
 
 [x]  pass number of workers from docker compose to api docker file
 
 [x] add corse policy
+
+[]  review nginx for web app serving in prod
 
 []  review corse policy
 
