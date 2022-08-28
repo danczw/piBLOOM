@@ -10,7 +10,7 @@ export default {
       thinking: "I'm just a pi, let me think . . .                ",
       answer: "",
 
-      api_url: import.meta.env.VITE_API_URL,
+      server_url: import.meta.env.VITE_EXPRESS_URL || 'http://localhost:8080',
       api_result: "",
     };
   },
@@ -61,7 +61,7 @@ export default {
 
       axios
         .post(
-          context.api_url, // data POST url
+          context.server_url + '/chat/', // data POST url
           { content: context.prompt }, // data to be sent,
           { headers }
         )
@@ -76,7 +76,7 @@ export default {
           api_response_reaction(
             context,
             timer,
-            "Error! Could not reach the API. " + error
+            "Error! Could not reach the Middleware. " + error
           );
         });
     },
