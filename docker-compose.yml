@@ -2,8 +2,8 @@ services:
   pibloom_api:
     build:
       context: ./piBLOOM_api
-      args:
-        - N_WORKERS=2 # number of uvicorn workers for unicorn api server
+    environment:
+      - N_WORKERS=2 # number of uvicorn workers for unicorn api server
     ports:
       - 5000:5000
 
