@@ -3,9 +3,9 @@
     <div>Raspberry Pi cluster based BLOOM model serving.</div>
     <br />
     <div>
-      Find more at
+      Find out more on
       <a href="https://github.com/danczw/piBLOOM"
-        >www.github.com/danczw/piBLOOM</a
+        >GitHub</a
       >
     </div>
     <div class="powerby">

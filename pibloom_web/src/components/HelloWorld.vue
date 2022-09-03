@@ -10,7 +10,7 @@ defineProps({
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>Talk to a Raspberry Pi, hardly distinguishable from a human.</h3>
+    <h3>Get response from a Raspberry Pi.</h3>
   </div>
 </template>
 
