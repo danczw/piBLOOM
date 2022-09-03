@@ -59,7 +59,8 @@ async def chat_with_bot(data_in: DataIn):
     if data_in.content:
         # generate BLOOM model response
         answer = bloom.predict(content=data_in.content)
-        response = {'data': answer[0]['generated_text']}
+        answer = answer.rsplit('.', 1)[0] + '.'
+        response = {'data': answer}
     else:
         # return error if no input
         raise HTTPException(
