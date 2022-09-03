@@ -15,7 +15,7 @@ Goal of the project is to serve a simple web app and REST API which allows to "c
 
 ## Quick Setup
 
-Expose web application to `http://localhost:80` by running:
+Expose web application, including middleware, application server and model serving API to `http://localhost:80` by running:
 
 ```bash
     docker compose up -- build
@@ -133,7 +133,6 @@ The project uses [Poetry](https://python-poetry.org) to manage the project depen
     `cd pibloom_api/`
     `poetry install`
 
-<br>
 
 The project uses [FastAPI](https://fastapi.tiangolo.com) with [uvicorn](https://www.uvicorn.org) to serve the model inference API.
 
@@ -185,6 +184,10 @@ Testing is done using [pytest](https://docs.pytest.org/) and run via
 
 The web application is build using [Vue.js](https://vuejs.org/). To customize configuration see [Vite Configuration Reference](https://vitejs.dev/config/). Using Docker, the web app files will be served with [expressjs](https://expressjs.com) as middleware, an unopinionated, minimalist web framework for *Node.js*.
 
+Before starting, make sure to update your `.env` file with the correct API url and port, as per [./pibloom_web/.env.example](./pibloom_web/.env.example).
+
+<br>
+
 **Local setup without Docker**
 
 To install dependencies, run:
@@ -206,6 +209,15 @@ Compile and minify for production:
 
     `cd pibloom_web/`
     `npm run build`
+
+<br>
+
+Running above setup is recommended for simple frontend development, as the middleware is not started for API communication. To start the web app including the *expressjs* middleware, run:
+
+    `cd pibloom_web/`
+    `npm run start`
+
+<br>
 
 **Local setup with Docker**
 
@@ -254,10 +266,12 @@ Then run the image via:
 
 ✅ add nginx for web app serving in prod
 
+✅ minimize api docker image - Note: further optimization highly beneficial
+
+✅ optimize model
+
+☐ add Kubernetes deployment
+
 ☐ review nginx configuration
 
 ☐ review corse policy
-
-✅ minimize api docker image - Note: further optimization highly beneficial
-
-☐ optimize model
