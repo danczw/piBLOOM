@@ -1,7 +1,8 @@
 ################################################################################
 # based on https://github.com/python-poetry/poetry/discussions/1879#discussioncomment-216865
 # `python-base` sets up all our shared environment variables
-FROM python:3-slim as python-base
+# FROM python:3-slim as python-base
+FROM arm64v8/python:3-slim as python-base
 
     # python
 ENV PYTHONUNBUFFERED=1 \

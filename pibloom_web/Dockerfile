@@ -1,6 +1,7 @@
 ################################################################################
 # build stage: install npm and build web app
-FROM node:lts-alpine as build-stage
+# FROM node:lts-alpine as build-stage
+FROM arm64v8/node:lts-alpine as build-stage
 
 WORKDIR /app
 COPY package*.json ./
@@ -15,7 +16,8 @@ RUN npm run build
 
 ################################################################################
 # production stage: copy web app and serve it
-FROM node:lts-alpine as production-stage
+# FROM node:lts-alpine as production-stage
+FROM arm64v8/node:lts-alpine as production-stage
 WORKDIR /app
 
 # copy modules, server, and web app files
