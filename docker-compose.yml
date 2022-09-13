@@ -1,5 +1,9 @@
+version: "3"
 services:
-  pibloom_api:
+  pibloom-api:
+    image: pibloom-api
+    container_name: pibloom-api
+    restart: unless-stopped
     build:
       context: ./piBLOOM_api
     environment:
@@ -9,7 +13,10 @@ services:
     networks:
       - pinet
 
-  pibloom_web:
+  pibloom-web:
+    image: pibloom-web
+    container_name: pibloom-web
+    restart: unless-stopped
     build:
       context: ./piBLOOM_web
     ports:
@@ -17,7 +24,10 @@ services:
     networks:
       - pinet
   
-  pibloom_proxy:
+  pibloom-proxy:
+    image: pibloom-proxy
+    container_name: pibloom-proxy
+    restart: unless-stopped
     build:
       context: ./piBLOOM_proxy
     ports:
