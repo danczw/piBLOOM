@@ -2,6 +2,10 @@
 pibloom_api/model/*
 !pibloom_api/model/README.txt
 
+# kubernetes files
+kubernetes/*
+!kubernetes/convert-compose.bash
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
