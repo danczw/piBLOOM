@@ -24,16 +24,16 @@ services:
     networks:
       - pinet
   
-  pibloom-proxy:
-    image: pibloom-proxy
-    container_name: pibloom-proxy
-    restart: unless-stopped
-    build:
-      context: ./piBLOOM_proxy
-    ports:
-      - 80:80
-    networks:
-      - pinet
+  # pibloom-proxy:
+  #   image: pibloom-proxy
+  #   container_name: pibloom-proxy
+  #   restart: unless-stopped
+  #   build:
+  #     context: ./piBLOOM_proxy
+  #   ports:
+  #     - 80:80
+  #   networks:
+  #     - pinet
 
 networks:
   pinet:

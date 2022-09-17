@@ -5,6 +5,7 @@ pibloom_api/model/*
 # kubernetes files
 kubernetes/*
 !kubernetes/convert-compose.bash
+!kubernetes/pibloom-ingress.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
