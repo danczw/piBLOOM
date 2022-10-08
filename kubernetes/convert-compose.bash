@@ -10,7 +10,7 @@ GREEN="\033[0;32m"
 RED="\033[0;31m"
 NC="\033[0m" # No Color
 
-# get arguments
+# get arguments: -u <username> for publishing to Docker Hub
 while getopts u: flag
 do
     case "${flag}" in
